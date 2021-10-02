@@ -21,6 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginJwtInterceptor)
                 .addPathPatterns("/api/v1/auth/test")
                 .excludePathPatterns("/swagger-ui/**")
+                .excludePathPatterns("/api/v1/auth/sign-in")
                 .excludePathPatterns("/api/v1/auth/login")
                 .excludePathPatterns("/api/v1/auth/logout");
 

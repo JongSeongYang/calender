@@ -1,6 +1,8 @@
 package com.himsoomzzin.calender.util;
 
 import io.jsonwebtoken.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -9,14 +11,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class JwtTokenProvider {
 
     /*
     수정
      */
-    public final static String secretKey = "b7d7b79c964ced82519d8d771a5814abed00d4c1b63496f5d7973c6313d9deb5"; // hotelorder hs256 값
+    public final static String secretKey = "de391c95fe8f4ae3d50adbdbcf2d7e7658638051c7c8cf27a3568a5fcb89ca20"; // 힘순찐 hs256 값
 
-    public String createUserToken(Integer staffId, String loginId, String pwd) {
+    public String createUserToken(Integer userId, String loginId, String pwd) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         String key = secretKey;
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
@@ -27,17 +30,14 @@ public class JwtTokenProvider {
         headerMap.put("alg", "HS256");
 
         Map<String, String> claimMap = new HashMap<>();
-        /*
-        수정
-         */
-        claimMap.put("staffId", staffId.toString());
+        claimMap.put("userId", userId.toString());
         claimMap.put("loginId", loginId);
         claimMap.put("pwd", pwd);
 
         JwtBuilder builder = Jwts.builder()
                 .setHeader(headerMap)
                 .setClaims(claimMap)
-                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 6))) // 6시간
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24))) // 24시간
                 .signWith(signKey, signatureAlgorithm);
 
         return builder.compact();
@@ -63,11 +63,9 @@ public class JwtTokenProvider {
                 .getBody();
 
         Map<String, String> map = new HashMap<>();
-        /*
-        수정
-         */
-        map.put("staffId", claims.get("staffId", String.class));
-
+        map.put("staffId", claims.get("userId", String.class));
+        map.put("loginId", claims.get("loginId", String.class));
+        map.put("pwd", claims.get("pwd", String.class));
 
         return map;
     }
