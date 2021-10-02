@@ -9,11 +9,12 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
 server:
   port: 4567
-
+logging:
+  config: classpath:logback-dev.xml
 
