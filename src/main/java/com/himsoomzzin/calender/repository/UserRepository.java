@@ -1,4 +1,4 @@
 package com.himsoomzzin.calender.repository;
 
-public interface userRepository {
+public interface UserRepository {
 }
