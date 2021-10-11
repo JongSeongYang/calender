@@ -26,6 +26,15 @@ public class Auth {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    public static class loginRequest {
+        private String loginId;
+        private String pwd;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class UserResponse {
         private String message;
         private Long userId;
