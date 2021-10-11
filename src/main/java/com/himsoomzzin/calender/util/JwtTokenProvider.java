@@ -19,7 +19,7 @@ public class JwtTokenProvider {
      */
     public final static String secretKey = "de391c95fe8f4ae3d50adbdbcf2d7e7658638051c7c8cf27a3568a5fcb89ca20"; // 힘순찐 hs256 값
 
-    public String createUserToken(Integer userId, String loginId, String pwd) {
+    public String createUserToken(String loginId, String pwd) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         String key = secretKey;
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
@@ -30,7 +30,6 @@ public class JwtTokenProvider {
         headerMap.put("alg", "HS256");
 
         Map<String, String> claimMap = new HashMap<>();
-        claimMap.put("userId", userId.toString());
         claimMap.put("loginId", loginId);
         claimMap.put("pwd", pwd);
 
